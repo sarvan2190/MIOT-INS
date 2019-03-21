@@ -1,0 +1,130 @@
+alter table HealthOrganisation add  guid nvarchar(50)
+go
+alter table location add  guid nvarchar(50)
+go
+alter table Specimen add  guid nvarchar(50)
+go
+alter table service add  guid nvarchar(50)
+go
+alter table itemmaster add  guid nvarchar(50)
+go
+alter table billableitem add  guid nvarchar(50)
+go
+alter table requestitem add  guid nvarchar(50)
+go
+alter table ordercatalogitem add  guid nvarchar(50)
+go
+alter table resultitem add  guid nvarchar(50)
+go
+alter table orderresultitem add  guid nvarchar(50)
+go
+alter table referencevalue add  guid nvarchar(50)
+go
+alter table referencedomain add  guid nvarchar(50)
+go
+alter table drugcatalogitem add  guid nvarchar(50)
+go
+alter table ordercategory add  guid nvarchar(50)
+go
+alter table ROLE add  guid nvarchar(50)
+go
+alter table careprovider add  guid nvarchar(50)
+go
+alter table careprovidergroup add  guid nvarchar(50)
+go
+alter table careproviderspecialty add  guid nvarchar(50)
+go
+alter table FREQUENCYDEFINITION add  guid nvarchar(50)
+go
+alter table Speciality add  guid nvarchar(50)
+go
+alter table cchpimaster add  guid nvarchar(50)
+go
+alter table problem add  guid nvarchar(50)
+go
+alter table procedurelist add  guid nvarchar(50)
+go
+alter table storebin add  guid nvarchar(50)
+go
+alter table ManufacturerDetail add  guid nvarchar(50)
+go
+alter table store add  guid nvarchar(50)
+go
+alter table PinCodeMapping add  guid nvarchar(50)
+go
+alter table agemaster add  guid nvarchar(50)
+go
+alter table BILLINGSERVICE add  guid nvarchar(50)
+go
+alter table DRUGGENERICMASTER add  guid nvarchar(50)
+go
+alter table DRUGGROUP add  guid nvarchar(50)
+go
+alter table insurancecompany add  guid nvarchar(50)
+go
+alter table payoragreement add  guid nvarchar(50)
+go
+alter table payordetail add  guid nvarchar(50)
+go
+alter table Insuranceplan add  guid nvarchar(50)
+go
+alter table billpackageitem add  guid nvarchar(50)
+go
+alter table ordersetbillableitem add  guid nvarchar(50)
+go
+alter table orderset add  guid nvarchar(50)
+go
+alter table billpackage add  guid nvarchar(50)
+go
+alter table BILLABLEITEMDETAIL add  guid nvarchar(50)
+go
+alter table roleprofile add guid nvarchar(50)
+go
+alter table costcode add  guid nvarchar(50)
+Go
+alter table ReferralMaster add  guid nvarchar(50)
+Go
+alter table itemmasterimage add  guid nvarchar(50)
+Go
+ALTER TABLE PATIENT ADD  GUID NVARCHAR(50)
+GO
+ALTER TABLE PATIENTVISIT ADD  GUID NVARCHAR(50)
+GO
+ALTER TABLE PATIENTVISITPAYOR ADD  GUID NVARCHAR(50)
+GO
+ALTER TABLE PATIENTVISITCAREPROVIDER ADD  GUID NVARCHAR(50)
+GO
+ALTER TABLE LOCATIONTRANSFER ADD  GUID NVARCHAR(50)
+GO
+ALTER TABLE PATIENTIMAGE ADD  GUID NVARCHAR(50)
+
+Go
+
+GO
+ALTER TABLE PATIENTVISIT ADD  GUID NVARCHAR(50)
+GO
+ALTER TABLE PATIENTVISITPAYOR ADD  GUID NVARCHAR(50)
+GO
+ALTER TABLE PATIENTVISITCAREPROVIDER ADD  GUID NVARCHAR(50)
+GO
+ALTER TABLE LOCATIONTRANSFER ADD  GUID NVARCHAR(50)
+GO
+ALTER TABLE PATIENTIMAGE ADD  GUID NVARCHAR(50)
+Go
+
+alter table patientimage add imagejson nvarchar(max)
+Go
+ALTER TABLE patientorder ADD  GUID NVARCHAR(50)
+Go
+ALTER TABLE patientorderdetail ADD  GUID NVARCHAR(50)
+Go
+ALTER TABLE patientalert ADD  GUID NVARCHAR(50)
+Go
+ALTER TABLE cchpi ADD  GUID NVARCHAR(50)
+Go
+
+alter table patientaddress add guid nvarchar(50)
+go
+alter table resultcomponent add guid nvarchar(50)
+Go
+alter table RESULTTEXTUAL add htmlresult nvarchar(max

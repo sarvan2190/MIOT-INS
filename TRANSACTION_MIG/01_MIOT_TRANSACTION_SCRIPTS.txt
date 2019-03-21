@@ -1,0 +1,495 @@
+alter table patientalias add guid nvarchar(50);
+alter table PATIENTID add guid nvarchar(50);
+alter table PatientPersonalCarer add guid nvarchar(50);
+alter table patientpackage add guid nvarchar(50)
+alter table patientpackageitem add guid nvarchar(50)
+alter table patientdeceaseddetail add guid nvarchar(50)
+alter table PatientOrderResult add guid nvarchar(50)
+alter table RESULTTEXTUAL add guid nvarchar(50)
+alter table RESULTTEXTUAL add htmlresult nvarchar(max)
+alter table cchpis add guid nvarchar(50)
+alter table patientproblem add guid nvarchar(50)
+alter table PATIENTMEDICALHISTORY add guid nvarchar(50)
+alter table patientprocedure add guid nvarchar(50)
+alter table Patientprocedurelist add guid nvarchar(50)
+alter table patientscheduleorderdetail add guid nvarchar(50)
+alter table patientscheduleorder add guid nvarchar(50)
+alter table Patientbilleditem add guid nvarchar(50)
+alter table Patientpaymentdetail add guid nvarchar(50)
+alter table patientbill add guid nvarchar(50)
+
+fGetlocationguid
+fGetstoreguid
+
+vAirpatientimage
+===============
+
+--patientimageguidmapping
+bcp "select * from HEALTHOBJECT_TEST..patientimageguids" queryout "D:\DM\patientimageguids.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientimageguids  --file patientimageguids.json  --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientimageguids  --out patientimageguids1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientimageguids1 set _id=replace(_id,'ObjectId(','')
+update patientimageguids1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientimage R  INNER JOIN patientimageguids1 TR ON TR.externaluid=R.UID
+
+--patientguidmapping
+bcp "select * from HEALTHOBJECT_TEST..patientguidmapping" queryout "D:\DM\patientguidmapping.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientguidmapping  --file patientguidmapping.json  --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientguidmapping  --out patientguidmapping1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientguidmapping1 set _id=replace(_id,'ObjectId(','')
+update patientguidmapping1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patient R  INNER JOIN patientguidmapping1 TR ON TR.externaluid=R.UID
+
+
+--patientvisitguidmapping
+bcp "select * from HEALTHOBJECT_TEST..Patientvisitguidmapping" queryout "D:\DM\Patientvisitguidmapping.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c Patientvisitguidmapping  --file Patientvisitguidmapping.json  --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection Patientvisitguidmapping  --out Patientvisitguidmapping1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update Patientvisitguidmapping1 set _id=replace(_id,'ObjectId(','')
+update Patientvisitguidmapping1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientvisit R  INNER JOIN Patientvisitguidmapping1 TR ON TR.externaluid=R.UID
+
+--patientaddressguidmapping
+bcp "select * from HEALTHOBJECT_TEST..patientaddressguidmapping" queryout "D:\DM\patientaddressguidmapping.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientaddressguidmapping  --file patientaddressguidmapping.json  --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientaddressguidmapping  --out patientaddressguidmapping1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientaddressguidmapping1 set _id=replace(_id,'ObjectId(','')
+update patientaddressguidmapping1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientaddress R  INNER JOIN patientaddressguidmapping TR ON TR.externaluid=R.UID
+UPDATE R  SET R.guid=TR._id  FROM PatientPersonalCarer R  INNER JOIN patientaddressguidmapping1 TR ON TR.externaluid=R.UID
+
+--patientaliasmapping
+bcp "select * from HEALTHOBJECT_TEST..patientaliasmapping" queryout "D:\DM\patientaliasmapping.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientaliasmapping  --file patientaliasmapping.json  --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientaliasmapping  --out patientaliasmapping1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientaliasmapping1 set _id=replace(_id,'ObjectId(','')
+update patientaliasmapping1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientalias R  INNER JOIN patientaliasmapping1 TR ON TR.externaluid=R.UID
+
+--patientidmapping
+bcp "select * from HEALTHOBJECT_TEST..patientidmapping" queryout "D:\DM\patientidmapping.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientidmapping  --file patientidmapping.json  --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientidmapping  --out patientidmapping1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientidmapping1 set _id=replace(_id,'ObjectId(','')
+update patientidmapping1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientid R  INNER JOIN patientidmapping1 TR ON TR.externaluid=R.UID
+
+--patientvisitcareproviderguid
+bcp "select * from HEALTHOBJECT_TEST..patientvisitcareproviderguid" queryout "D:\DM\patientvisitcareproviderguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientvisitcareproviderguid  --file patientvisitcareproviderguid.json  --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientvisitcareproviderguid  --out patientvisitcareproviderguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientvisitcareproviderguid1 set _id=replace(_id,'ObjectId(','')
+update patientvisitcareproviderguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientvisitcareprovider R  INNER JOIN patientvisitcareproviderguid1 TR ON TR.externaluid=R.UID
+
+--PatientVisitPayorguid
+bcp "select * from HEALTHOBJECT_TEST..PatientVisitPayorguid" queryout "D:\DM\PatientVisitPayorguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c PatientVisitPayorguid  --file PatientVisitPayorguid.json  --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection PatientVisitPayorguid  --out PatientVisitPayorguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update PatientVisitPayorguid1 set _id=replace(_id,'ObjectId(','')
+update PatientVisitPayorguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM PatientVisitPayor R  INNER JOIN PatientVisitPayorguid1 TR ON TR.externaluid=R.UID
+
+--LocationTransferguid
+bcp "select * from HEALTHOBJECT_TEST..LocationTransferguid" queryout "D:\DM\LocationTransferguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c LocationTransferguid  --file LocationTransferguid.json  --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection LocationTransferguid  --out LocationTransferguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update LocationTransferguid1 set _id=replace(_id,'ObjectId(','')
+update LocationTransferguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM LocationTransfer R  INNER JOIN LocationTransferguid1 TR ON TR.externaluid=R.UID
+
+--patientorderguid
+bcp "select * from HEALTHOBJECT_TEST..patientorderguid" queryout "D:\DM\patientorderguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientorderguid  --file patientorderguid.json  --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientorderguid  --out patientorderguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientorderguid1 set _id=replace(_id,'ObjectId(','')
+update patientorderguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientorder R  INNER JOIN patientorderguid1 TR ON TR.externaluid=R.UID
+
+--PatientOrderDetailguid
+bcp "select * from HEALTHOBJECT_TEST..PatientOrderDetailguid" queryout "D:\DM\PatientOrderDetailguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c PatientOrderDetailguid  --file PatientOrderDetailguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection PatientOrderDetailguid  --out PatientOrderDetailguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update PatientOrderDetailguid1 set _id=replace(_id,'ObjectId(','')
+update PatientOrderDetailguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM PatientOrderDetail1 R  INNER JOIN PatientOrderDetailguid1 TR ON TR.externaluid=R.UID
+
+
+--patientpackageguid
+bcp "select * from HEALTHOBJECT_TEST..patientpackageguid" queryout "D:\DM\patientpackageguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientpackageguid  --file patientpackageguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientpackageguid  --out patientpackageguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientpackageguid1 set _id=replace(_id,'ObjectId(','')
+update patientpackageguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientpackage R  INNER JOIN patientpackageguid1 TR ON TR.externaluid=R.UID
+
+--patientpackageitemguid
+bcp "select * from HEALTHOBJECT_TEST..patientpackageitemguid" queryout "D:\DM\patientpackageitemguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientpackageitemguid  --file patientpackageitemguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientpackageitemguid  --out patientpackageitemguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientpackageitemguid1 set _id=replace(_id,'ObjectId(','')
+update patientpackageitemguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientpackageitem R  INNER JOIN patientpackageitemguid1 TR ON TR.externaluid=R.UID
+
+--patientdeceasedguid
+bcp "select * from HEALTHOBJECT_TEST..patientdeceaseddetailguid" queryout "D:\DM\patientdeceaseddetailguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientdeceaseddetailguid  --file patientdeceaseddetailguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientdeceaseddetailguid  --out patientdeceaseddetailguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientdeceaseddetailguid1 set _id=replace(_id,'ObjectId(','')
+update patientdeceaseddetailguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientdeceaseddetail R  INNER JOIN patientdeceaseddetailguid1 TR ON TR.externaluid=R.UID
+
+--patientvitalsignsguid
+bcp "select * from HEALTHOBJECT_TEST..patientvitalsignsguid" queryout "D:\DM\patientvitalsignsguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientvitalsignsguid  --file patientvitalsignsguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientvitalsignsguid  --out patientvitalsignsguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientvitalsignsguid1 set _id=replace(_id,'ObjectId(','')
+update patientvitalsignsguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM PatientOrderResult R  INNER JOIN patientvitalsignsguid1 TR ON TR.externaluid=R.UID
+
+--resulttextualguid
+bcp "select * from HEALTHOBJECT_TEST..resulttextualguid" queryout "D:\DM\resulttextualguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c resulttextualguid  --file resulttextualguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection resulttextualguid  --out resulttextualguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update resulttextualguid1 set _id=replace(_id,'ObjectId(','')
+update resulttextualguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM resulttextual R  INNER JOIN resulttextualguid1 TR ON TR.externaluid=R.UID
+
+--cchpiguidmappings
+bcp "select * from HEALTHOBJECT_TEST..cchpiguidmappings" queryout "D:\DM\cchpiguidmappings.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c cchpiguidmappings  --file cchpiguidmappings.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection cchpiguidmappings  --out cchpiguidmappings1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update cchpiguidmappings1 set _id=replace(_id,'ObjectId(','')
+update cchpiguidmappings1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM cchpi R  INNER JOIN cchpiguidmappings1 TR ON TR.externaluid=R.UID
+
+
+--patientproblemguidmappings
+bcp "select * from HEALTHOBJECT_TEST..patientproblemguidmappings" queryout "D:\DM\patientproblemguidmappings.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientproblemguidmappings  --file patientproblemguidmappings.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientproblemguidmappings  --out patientproblemguidmappings1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientproblemguidmappings1 set _id=replace(_id,'ObjectId(','')
+update patientproblemguidmappings1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientproblem R  INNER JOIN patientproblemguidmappings1 TR ON TR.externaluid=R.UID
+
+--patientalertguidmappings
+bcp "select * from HEALTHOBJECT_TEST..patientalertguidmappings" queryout "D:\DM\patientalertguidmappings.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientalertguidmappings  --file patientalertguidmappings.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientalertguidmappings  --out patientalertguidmappings1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientalertguidmappings1 set _id=replace(_id,'ObjectId(','')
+update patientalertguidmappings1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientalert R  INNER JOIN patientalertguidmappings1 TR ON TR.externaluid=R.UID
+
+--resultcomponentguidmappings
+bcp "select * from HEALTHOBJECT_TEST..resultcomponentguidmappings" queryout "D:\DM\resultcomponentguidmappings.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c resultcomponentguidmappings  --file resultcomponentguidmappings.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection resultcomponentguidmappings  --out resultcomponentguidmappings1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update resultcomponentguidmappings1 set _id=replace(_id,'ObjectId(','')
+update resultcomponentguidmappings1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM resultcomponent R  INNER JOIN resultcomponentguidmappings1 TR ON TR.externaluid=R.UID
+
+--billpackageguidmappings
+bcp "select * from HEALTHOBJECT_TEST..billpackageguidmappings" queryout "D:\DM\billpackageguidmappings.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c billpackageguidmappings  --file billpackageguidmappings.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection billpackageguidmappings  --out billpackageguidmappings1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update billpackageguidmappings1 set _id=replace(_id,'ObjectId(','')
+update billpackageguidmappings1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM BillPackage R  INNER JOIN billpackageguidmappings1 TR ON TR.externaluid=R.UID
+
+--patientprocedurelistguid
+bcp "select * from HEALTHOBJECT_TEST..patientprocedurelistguid" queryout "D:\DM\patientprocedurelistguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientprocedurelistguid  --file patientprocedurelistguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientprocedurelistguid  --out patientprocedurelistguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientprocedurelistguid1 set _id=replace(_id,'ObjectId(','')
+update patientprocedurelistguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientprocedurelist R  INNER JOIN patientprocedurelistguid1 TR ON TR.externaluid=R.UID
+
+--patientprocedureguid
+bcp "select * from HEALTHOBJECT_TEST..patientprocedureguid" queryout "D:\DM\patientprocedureguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientprocedureguid  --file patientprocedureguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientprocedureguid  --out patientprocedureguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientprocedureguid1 set _id=replace(_id,'ObjectId(','')
+update patientprocedureguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientprocedure R  INNER JOIN patientprocedureguid1 TR ON TR.externaluid=R.UID
+
+--vairpatientfutureorderdetailguid
+bcp "select * from HEALTHOBJECT_TEST..vairpatientfutureorderdetailguid" queryout "D:\DM\vairpatientfutureorderdetailguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c vairpatientfutureorderdetailguid  --file vairpatientfutureorderdetailguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection vairpatientfutureorderdetailguid  --out vairpatientfutureorderdetailguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update vairpatientfutureorderdetailguid1 set _id=replace(_id,'ObjectId(','')
+update vairpatientfutureorderdetailguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientscheduleorderdetail R  INNER JOIN vairpatientfutureorderdetailguid1 TR ON TR.externaluid=R.UID
+
+--patientScheduleorderguid
+bcp "select * from HEALTHOBJECT_TEST..patientScheduleorderguid" queryout "D:\DM\patientScheduleorderguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientScheduleorderguid  --file patientScheduleorderguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection patientScheduleorderguid  --out patientScheduleorderguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update patientScheduleorderguid1 set _id=replace(_id,'ObjectId(','')
+update patientScheduleorderguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientScheduleorder R  INNER JOIN patientScheduleorderguid1 TR ON TR.externaluid=R.UID
+
+
+--vairpatientbilleditemguid
+
+bcp "select * from HEALTHOBJECT_TEST..vairpatientbilleditemguid" queryout "D:\DM\vairpatientbilleditemguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c vairpatientbilleditemguid  --file vairpatientbilleditemguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection vairpatientbilleditemguid  --out vairpatientbilleditemguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update vairpatientbilleditemguid1 set _id=replace(_id,'ObjectId(','')
+update vairpatientbilleditemguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM Patientbilleditem R  INNER JOIN vairpatientbilleditemguid1 TR ON TR.externaluid=R.UID
+
+
+--vairpatientpaymentdetailguid
+
+bcp "select * from HEALTHOBJECT_TEST..vairpatientpaymentdetailguid" queryout "D:\DM\vairpatientpaymentdetailguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c vairpatientpaymentdetailguid  --file vairpatientpaymentdetailguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection vairpatientpaymentdetailguid  --out vairpatientpaymentdetailguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update vairpatientpaymentdetailguid1 set _id=replace(_id,'ObjectId(','')
+update vairpatientpaymentdetailguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM Patientpaymentdetail R  INNER JOIN vairpatientpaymentdetailguid1 TR ON TR.externaluid=R.UID
+
+--vairpatientbillguid
+
+bcp "select * from HEALTHOBJECT_TEST..vairpatientbillguid" queryout "D:\DM\vairpatientbillguid.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c vairpatientbillguid  --file vairpatientbillguid.json --drop --jsonArray --host 172.16.10.80
+mongoexport --host 172.16.10.80 -u "incusdba" -p "incus@123" --db arcusairdb --collection vairpatientbillguid  --out vairpatientbillguid1.csv --type=csv --fields _id,externaluid,PatientUID
+
+update vairpatientbillguid1 set _id=replace(_id,'ObjectId(','')
+update vairpatientbillguid1 set _id=replace(_id,')','')
+UPDATE R  SET R.guid=TR._id  FROM patientbill R  INNER JOIN vairpatientbillguid1 TR ON TR.externaluid=R.UID
+
+
+
+--patientimage
+bcp "select * from HEALTHOBJECT_TEST..vAirpatientimage" queryout "D:\DM\vAirpatientimage.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientimages  --file vAirpatientimage.json --drop --jsonArray --host 172.16.10.80
+
+--Patients
+bcp "select * from HEALTHOBJECT_TEST..vAirPatient" queryout "D:\DM\vAirPatient.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patients  --file vAirPatient.json  --drop --jsonArray --host 172.16.10.80
+
+need to run this script [PatientVisitCareProvider] before patient visit loading
+
+--Patientvisits
+bcp "select * from HEALTHOBJECT_TEST..vAirPatientvisit" queryout "D:\DM\vAirPatientvisit.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientvisits  --file vAirPatientvisit.json --drop --jsonArray --host 172.16.10.80
+
+db.referencevalues.update({valuecode:'ADMNS'}, {$set: {valuecode:'ALRTYP1'}}, {multi: true})
+db.referencevalues.update({valuecode:'CLINCL'}, {$set: {valuecode:'ALRTYP2'}}, {multi: true})
+db.referencevalues.update({valuecode:'DIETTY'}, {$set: {valuecode:'ALRTYP3'}}, {multi: true})
+db.referencevalues.update({valuecode:'FNCIAL'}, {$set: {valuecode:'ALRTYP4'}}, {multi: true})
+
+
+--Patient--file D:\mig\locations
+bcp "select * from HEALTHOBJECT_TEST..vpatientfilelocation" queryout "D:\DM\vpatientfilelocation.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c mrdfolders  --file vpatientfilelocation.json --drop --jsonArray --host 172.16.10.80
+
+--PatientadditionalDetails
+bcp "select * from HEALTHOBJECT_TEST..vAirPatientAdditionalDetails" queryout "D:\DM\vAirPatientAdditionalDetails.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientadditionaldetails  --file vAirPatientAdditionalDetails.json --drop --jsonArray --host 172.16.10.80
+
+
+--PatientdeathRecord
+bcp "select * from HEALTHOBJECT_TEST..vPatientDeathRecord" queryout "D:\DM\vPatientDeathRecord.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c deathrecords  --file vPatientDeathRecord.json  --drop --jsonArray --host 172.16.10.80
+
+--VitalSigns
+bcp "select * from HEALTHOBJECT_TEST..vairobservations" queryout "D:\DM\vairobservations.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c observations  --file vairobservations.json  --drop --jsonArray --host 172.16.10.80
+
+(before running this we need to add html column and some scripts needs to be executed  reference RTFTOHTML)
+--Radiology report
+bcp "select * from HEALTHOBJECT_TEST..vAirRadiologyReport" queryout "D:\DM\vAirRadiologyReport.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c radiologyresults  --file vAirRadiologyReport.json  --drop --jsonArray --host 172.16.10.80
+
+--Patientcchpi
+bcp "select * from HEALTHOBJECT_TEST..vAirpatientCCHPI" queryout "D:\DM\vAirpatientCCHPI.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c cchpis  --file vAirpatientCCHPI.json --drop --jsonArray --host 172.16.10.80
+
+--Patientdiagnosis
+bcp "select * from HEALTHOBJECT_TEST..vairpatientdiagnosis" queryout "D:\DM\vairpatientdiagnosis.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c diagnoses  --file vairpatientdiagnosis.json --drop --jsonArray --host 172.16.10.80
+
+--PatientAlert
+bcp "select * from HEALTHOBJECT_TEST..vAirPatientalerts" queryout "D:\DM\vAirPatientalerts.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c alerts  --file vAirPatientalerts.json  --drop --jsonArray --host 172.16.10.80
+
+--MedicalItems
+bcp "select * from HEALTHOBJECT_TEST..vAirMedicalItems" queryout "D:\DM\vAirMedicalItems.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c medicalhistories  --file vAirMedicalItems.json --drop --jsonArray --host 172.16.10.80
+
+(fMSTCareProviderLocationbyguid) needs to be executed before allergy
+
+--PatientTradeAllergy
+bcp "select * from HEALTHOBJECT_TEST..vAirTradeNameAllergry" queryout "D:\DM\vAirTradeNameAllergry.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c allergies  --file vAirTradeNameAllergry.json  --drop --jsonArray --host 172.16.10.80
+
+--PatientGenericallergy
+bcp "select * from HEALTHOBJECT_TEST..vAirGenericAllergry" queryout "D:\DM\vAirGenericAllergry.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c allergies  --file vAirGenericAllergry.json  --jsonArray --host 172.16.10.80
+
+--PatientGroupAllergy
+bcp "select * from HEALTHOBJECT_TEST..vAirGroupAllergry" queryout "D:\DM\vAirGroupAllergry.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c allergies  --file vAirGroupAllergry.json  --jsonArray --host 172.16.10.80
+
+--PatientUnknowAllergy
+bcp "select * from HEALTHOBJECT_TEST..VAirUnknownallergy" queryout "D:\DM\VAirUnknownallergy.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c allergies  --file VAirUnknownallergy.json  --jsonArray --host 172.16.10.80
+
+--Labresult
+bcp "select * from HEALTHOBJECT_TEST..vairlabresults" queryout "D:\DM\vairlabresults.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c labresults  --file vairlabresults.json  --drop --jsonArray --host 172.16.10.80
+
+--doctorEnotes(Not available in Miot)
+bcp "select * from healthobject..vAirBDMSEnote" queryout "D:\mig\vAirBDMSEnote.json" -t -T -c -C 65001
+db.doctornotes.remove({orguiD:ObjectId("5b20f438d1202e29ce16f710"})
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c doctornotes  --file D:\mig\vAirBDMSEnote.json  --jsonArray --host 172.22.17.11
+mongoexport  -d arcusairdb -u incusdba -p incus@123 -c doctornotes --type csv   -o D:\mig\doctornotes.csv --fields _id,externaluid,orguid,externaltablename 
+
+--LabourDetail(Not Required)
+bcp "select * from healthobject..vAirLabourDetail" queryout "D:\mig\vAirLabourDetail.json" -t -T -c -C 65001
+db.labourdetails.remove({orguiD:ObjectId("5b20f438d1202e29ce16f710"})
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c labourdetails  --file D:\mig\vAirLabourDetail.json  --jsonArray --host 172.22.17.11
+mongoexport  -d arcusairdb -u incusdba -p incus@123 -c labourdetails --type csv   -o D:\mig\labourdetails.csv --fields _id,externaluid,orguid,externaltablename 
+
+--AncRecord(Not Required)
+bcp "select * from healthobject..vAirAncRecord" queryout "D:\mig\vAirAncRecord.json" -t -T -c -C 65001
+db.ancrecords.remove({orguiD:ObjectId("5b20f438d1202e29ce16f710"})
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c ancrecords  --file D:\mig\vAirAncRecord.json  --jsonArray --host 172.22.17.11
+mongoexport  -d arcusairdb -u incusdba -p incus@123 -c ancrecords --type csv   -o D:\mig\ancrecords.csv --fields _id,externaluid,orguid,externaltablename 
+
+
+--FatherDetails(Not Required)
+bcp "select * from healthobject..VFatherDetail" queryout "D:\mig\VFatherDetail.json" -t -T -c -C 65001
+db.fathers.remove({orguiD:ObjectId("5b20f438d1202e29ce16f710"})
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c fathers  --file D:\mig\VFatherDetail.json  --jsonArray --host 172.22.17.11
+mongoexport  -d arcusairdb -u incusdba -p incus@123 -c fathers --type csv   -o D:\mig\fathers.csv --fields _id,externaluid,orguid,externaltablename 
+
+--PatientBirthRegister(Not Required)
+bcp "select * from healthobject..vAirNewBornDetails" queryout "D:\mig\vAirNewBornDetails.json" -t -T -c -C 65001
+db.newborndetails.remove({orguiD:ObjectId("5b20f438d1202e29ce16f710"})
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c newborndetails  --file D:\mig\vAirNewBornDetails.json  --jsonArray --host 172.22.17.11
+mongoexport  -d arcusairdb -u incusdba -p incus@123 -c newborndetails --type csv   -o D:\mig\newborndetails.csv --fields _id,externaluid,orguid,externaltablename 
+
+--PatientPackage
+bcp "select * from HEALTHOBJECT_TEST..vairpatientpackage" queryout "D:\DM\vairpatientpackage.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientpackages  --file vairpatientpackage.json --drop --jsonArray --host 172.16.10.80
+
+bcp "select * from HEALTHOBJECT_TEST..vairprocedure" queryout "D:\DM\vairprocedure.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientprocedures  --file vairprocedure.json  --drop --jsonArray --host 172.16.10.80
+
+the below patientorders are not migrated to patient orders
+(1 patient id is 0 and not available in patients)
+
+ select count(1) from patientorder where ORDCTUID not in (
+ select distinct uid from Referencevalue where Domaincode ='ORDCT')
+
+--PatientOrderLab
+bcp "select * from HEALTHOBJECT_TEST..vairpatientorderLAB" queryout "D:\DM\vairpatientorderLAB.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientorders  --file vairpatientorderLAB.json   --drop --jsonArray --host 172.16.10.80
+
+--PatientOrderSupply
+bcp "select * from HEALTHOBJECT_TEST..vairpatientorderSUPPLY" queryout "D:\DM\vairpatientorderSUPPLY.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientorders  --file vairpatientorderSUPPLY.json --drop --jsonArray --host 172.16.10.80
+
+
+--PatientOrderothers
+bcp "select * from HEALTHOBJECT_TEST..vairpatientorderothers" queryout "D:\DM\vairpatientorderothers.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientorders  --file vairpatientorderothers.json  --jsonArray --host 172.16.10.80
+
+--PatientOrderMedication
+bcp "select * from HEALTHOBJECT_TEST..vairpatientordermedication" queryout "D:\DM\vairpatientordermedication.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientorders  --file vairpatientordermedication.json  --jsonArray --host 172.16.10.80
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c vairpatientorderdetailguid --type csv  -q'{orgcode:48}' -o D:\mig\vairpatientorderdetailguid.csv --fields _id,externaluid,orguid,externaltablename 
+
+
+--Patientfutureorder
+bcp "select * from HEALTHOBJECT_TEST..vairpatientfutureorder" queryout "D:\DM\vairpatientfutureorder.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientfuture --file vairpatientfutureorder.json --drop --jsonArray --host 172.16.10.80
+
+*********************Pending**********************
+
+before migrating to patients bills the below has to be done
+
+
+2. fGetpatientimagebase64
+3. fGetitemimagebase64
+4. fGetCareproviderguid
+5. fGetCareproviderguid
+1. run the upgrade scripts (upgradescript)
+
+--Patientbills
+bcp "select * from HEALTHOBJECT_TEST..vairpatientbills" queryout "D:\DM\vairpatientbills.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c patientbills  --file vairpatientbills.json  --drop --jsonArray --host 172.16.10.80
+
+
+--PatientDeposit
+bcp "select * from HEALTHOBJECT_TEST..vAirPatientDeposit" queryout "D:\DM\vAirPatientDeposit.json" -t -T -c -C 65001 -U "arcusadmin" -P "incarnus@234" -S "MIOTTEST04\SQLSERVER"
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c deposits  --file D:\mig\vAirPatientDeposit.json  --drop --jsonArray --host 172.22.17.11
+
+
+--Progressnotes
+bcp "select * from healthobject..vAirProgressNote" queryout "D:\mig\vAirProgressNote.json" -t -T -c -C 65001
+db.clinicalnotes.remove({orguiD:ObjectId("5b20f438d1202e29ce16f710"})
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c clinicalnotes  --file D:\mig\vAirProgressNote.json  --jsonArray --host 172.22.17.11
+mongoexport  -d arcusairdb -u incusdba -p incus@123 -c clinicalnotes --type csv   -o D:\mig\clinicalnotes.csv --fields _id,externaluid,orguid,externaltablename 
+UPDATE R  SET R.guid=TR._id  FROM BDMSASTEMRProgressNote R  INNER JOIN e_clinicalnotes TR ON TR.externalUID=R.id and tr.externaltablename='BDMSASTEMRProgressNote' 
+
+--ClinicalExam
+bcp "select * from healthobject..vAirClinicalExam" queryout "D:\mig\vAirClinicalExam.json" -t -T -c -C 65001
+db.examinations.remove({orguiD:ObjectId("5b20f438d1202e29ce16f710"})
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c examinations  --file D:\mig\vAirClinicalExam.json  --jsonArray --host 172.22.17.11
+mongoexport  -d arcusairdb -u incusdba -p incus@123 -c examinations --type csv   -o D:\mig\examinations.csv --fields _id,externaluid,orguid,externaltablename 
+
+
+--ClinicalNote
+bcp "select * from healthobject..vairClincalNote" queryout "D:\mig\vairClincalNote.json" -t -T -c -C 65001
+db.clinicalnotes.remove({orguiD:ObjectId("5b20f438d1202e29ce16f710"})
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c clinicalnotes  --file D:\mig\vairClincalNote.json  --jsonArray --host 172.22.17.11
+mongoexport  -d arcusairdb -u incusdba -p incus@123 -c clinicalnotes --type csv   -o D:\mig\clinicalnotes.csv --fields _id,externaluid,orguid,externaltablename 
+UPDATE R  SET R.guid=TR._id  FROM patientclinicalnote R  INNER JOIN e_clinicalnotes TR ON TR.externalUID=R.UID and tr.externaltablename='patientclinicalnote' 
+
+
+
+--Scanneddocument
+bcp "select * from healthobject..vairscanneddocument" queryout "D:\mig\vairscanneddocument.json" -t -T -c -C 65001
+db.scanneddocuments.remove({orguiD:ObjectId("5b20f438d1202e29ce16f710"})
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c scanneddocuments  --file D:\mig\vairscanneddocument.json  --jsonArray --host 172.22.17.11
+mongoexport  -d arcusairdb -u incusdba -p incus@123 -c scanneddocuments --type csv   -o D:\mig\scanneddocuments.csv --fields _id,externaluid,orguid,externaltablename 
+
+
+
+
+--Doctornote
+bcp "select * from healthobject..vAirDoctorNote" queryout "D:\mig\vAirDoctorNote.json" -t -T -c -C 65001
+db.clinicalnotes.remove({orguiD:ObjectId("5b20f438d1202e29ce16f710"})
+mongoimport -d arcusairdb -u incusdba -p incus@123 -c doctornotes  --file D:\mig\vAirDoctorNote.json  --jsonArray --host 172.22.17.11
+mongoexport  -d arcusairdb -u incusdba -p incus@123 -c doctornotes --type csv   -o D:\mig\doctornotes.csv --fields _id,externaluid,orguid,externaltablename 
+
