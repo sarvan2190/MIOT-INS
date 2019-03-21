@@ -1,0 +1,125 @@
+/* 1 */
+{
+    "_id" : ObjectId("5c89c0c5792dc06f769929b3"),
+    "code" : "GST5",
+    "name" : "GST Rate 5 %",
+    "description" : "GST Rate 5 %",
+    "activefrom" : ISODate("2019-03-13T18:30:00.000Z"),
+    "activeto" : null,
+    "taxtype" : "BILLINGENUMS.TAXTYPEINPUT",
+    "taxpercentage" : 5,
+    "istaxbeforediscount" : false,
+    "isexclusive" : true,
+    "createdby" : ObjectId("5c7942cc5d836f29be3e7c2c"),
+    "createdat" : ISODate("2019-03-14T02:47:33.606Z"),
+    "modifiedby" : ObjectId("5c7942cc5d836f29be3e7f2c"),
+    "modifiedat" : ISODate("2019-03-15T13:06:38.326Z"),
+    "statusflag" : "A",
+    "orguid" : ObjectId("567985db736f64f263128548"),
+    "__v" : 0
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("5c89c0eb792dc06f769929b5"),
+    "code" : "GST12",
+    "name" : "GST Rate 12 %",
+    "description" : "GST Rate 12 %",
+    "activefrom" : ISODate("2019-03-13T18:30:00.000Z"),
+    "activeto" : null,
+    "taxtype" : "BILLINGENUMS.TAXTYPEINPUT",
+    "taxpercentage" : 12,
+    "istaxbeforediscount" : false,
+    "isexclusive" : true,
+    "createdby" : ObjectId("5c7942cc5d836f29be3e7c2c"),
+    "createdat" : ISODate("2019-03-14T02:48:11.661Z"),
+    "modifiedby" : ObjectId("5c7942cc5d836f29be3e7f2c"),
+    "modifiedat" : ISODate("2019-03-15T13:07:09.756Z"),
+    "statusflag" : "A",
+    "orguid" : ObjectId("567985db736f64f263128548"),
+    "__v" : 0
+}
+
+/* 3 */
+{
+    "_id" : ObjectId("5c89c119792dc06f769929b7"),
+    "code" : "GST18",
+    "name" : "GST Rate for 18%",
+    "description" : "GST rate for 18%",
+    "activefrom" : ISODate("2019-03-13T18:30:00.000Z"),
+    "activeto" : null,
+    "taxtype" : "BILLINGENUMS.TAXTYPEINPUT",
+    "taxpercentage" : 18,
+    "istaxbeforediscount" : false,
+    "isexclusive" : true,
+    "createdby" : ObjectId("5c7942cc5d836f29be3e7c2c"),
+    "createdat" : ISODate("2019-03-14T02:48:57.505Z"),
+    "modifiedby" : ObjectId("5c7942cc5d836f29be3e7c2c"),
+    "modifiedat" : ISODate("2019-03-14T02:48:57.505Z"),
+    "statusflag" : "A",
+    "orguid" : ObjectId("567985db736f64f263128548"),
+    "__v" : 0
+}
+
+/* 4 */
+{
+    "_id" : ObjectId("5c89c13c792dc06f769929b9"),
+    "code" : "GST28",
+    "name" : "GST Rate 28 %",
+    "description" : "GST Rate 28 %",
+    "activefrom" : ISODate("2019-03-13T18:30:00.000Z"),
+    "activeto" : null,
+    "taxtype" : "BILLINGENUMS.TAXTYPEINPUT",
+    "taxpercentage" : 18,
+    "istaxbeforediscount" : false,
+    "isexclusive" : true,
+    "createdby" : ObjectId("5c7942cc5d836f29be3e7c2c"),
+    "createdat" : ISODate("2019-03-14T02:49:32.025Z"),
+    "modifiedby" : ObjectId("5c7942cc5d836f29be3e7f2c"),
+    "modifiedat" : ISODate("2019-03-15T13:07:34.082Z"),
+    "statusflag" : "A",
+    "orguid" : ObjectId("567985db736f64f263128548"),
+    "__v" : 0
+}
+
+/* 5 */
+{
+    "_id" : ObjectId("5c8f430c792dc06f76992bec"),
+    "code" : "GST0",
+    "name" : "GST rate for 0 %",
+    "description" : "GST rate for 0 %",
+    "activefrom" : ISODate("2019-03-17T18:30:00.000Z"),
+    "activeto" : null,
+    "taxtype" : "BILLINGENUMS.TAXTYPEINPUT",
+    "taxpercentage" : 0,
+    "istaxbeforediscount" : false,
+    "isexclusive" : true,
+    "createdby" : ObjectId("5c7942cc5d836f29be3e7c2c"),
+    "createdat" : ISODate("2019-03-18T07:04:44.568Z"),
+    "modifiedby" : ObjectId("5c7942cc5d836f29be3e7c2c"),
+    "modifiedat" : ISODate("2019-03-18T07:04:44.569Z"),
+    "statusflag" : "A",
+    "orguid" : ObjectId("567985db736f64f263128548"),
+    "__v" : 0
+}
+
+/* 6 */
+{
+    "_id" : ObjectId("5c8f4337792dc06f76992bee"),
+    "code" : "GST14",
+    "name" : "GST rate for 14.5",
+    "description" : "GST Rate for 14.5",
+    "activefrom" : ISODate("2019-03-17T18:30:00.000Z"),
+    "activeto" : null,
+    "taxtype" : "BILLINGENUMS.TAXTYPEINPUT",
+    "taxpercentage" : 14.5,
+    "istaxbeforediscount" : false,
+    "isexclusive" : true,
+    "createdby" : ObjectId("5c7942cc5d836f29be3e7c2c"),
+    "createdat" : ISODate("2019-03-18T07:05:27.379Z"),
+    "modifiedby" : ObjectId("5c7942cc5d836f29be3e7c2c"),
+    "modifiedat" : ISODate("2019-03-18T07:05:27.379Z"),
+    "statusflag" : "A",
+    "orguid" : ObjectId("567985db736f64f263128548"),
+    "__v" : 0
+}
